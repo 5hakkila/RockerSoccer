@@ -33,7 +33,7 @@ public class Preloader : MonoBehaviour {
             if(fadeGroup.alpha >= 1)
             {
                 Debug.Log("Change the scene");
-                SceneManager.LoadScene("MainMenu");
+                SceneManager.LoadScene("Menu");
             }
         }
 
