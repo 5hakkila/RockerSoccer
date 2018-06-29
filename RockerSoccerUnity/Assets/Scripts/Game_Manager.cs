@@ -22,7 +22,7 @@ public class Game_Manager : MonoBehaviour {
     public bool enableBall;
     private float currentTime;
     private float roundTime;
-    private float startTime = 60.0f;
+    private float startTime = 30.0f;
 
     public Text UiTime;
     public Text UiScoreTeam1;
