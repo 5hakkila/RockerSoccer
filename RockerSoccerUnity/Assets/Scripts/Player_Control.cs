@@ -105,8 +105,8 @@ public class Player_Control : MonoBehaviour {
             direction = endDirection - startDirection;
             direction.Normalize();
 
-            //  transform.position = Vector2.MoveTowards(player.transform.position, ball.position,2.0f *Time.deltaTime);
-
+            
+            //move player right
             if (player.transform.position.x < ball.transform.position.x && getDistance > 0.8f && grounded == true)
             {
                 player_state = PlayerState.RIGHT;
@@ -124,7 +124,7 @@ public class Player_Control : MonoBehaviour {
 
 
 
-
+            // move player left
             if (player.transform.position.x > ball.transform.position.x && getDistance > 0.8f  && grounded == true)
             {
                 player_state = PlayerState.LEFT;
@@ -147,6 +147,7 @@ public class Player_Control : MonoBehaviour {
 
             }
 
+            //jump
             if (TouchControl.inputState == TouchControl.InputState.Up && canKick == false && isBallPlayable == true && grounded == true)
             {
                 playerR.velocity = new Vector2(0, 0);
@@ -154,7 +155,7 @@ public class Player_Control : MonoBehaviour {
 
             }
 
-
+            //kick ball start*******************************************************************************************************************
             if (TouchControl.inputState == TouchControl.InputState.UpperRight && canKick ==true && isBallPlayable == true && grounded ==true)
             {
 
@@ -191,6 +192,16 @@ public class Player_Control : MonoBehaviour {
             {
                 ballR.velocity = new Vector2(0.0f, 0.0f);
                 ballR.AddForce(direction * 1.0f * kickForce);                    
+
+            }
+            // kick ball end *******************************************************************************************************************
+
+            //on air kick headputt
+            if (canKick == true && isBallPlayable == true && grounded == false)
+            {
+                ballR.velocity = new Vector2(0.0f, 0.0f);
+                ballR.AddForce(direction * 1.0f * (kickForce / 2));
+
 
             }
         }
