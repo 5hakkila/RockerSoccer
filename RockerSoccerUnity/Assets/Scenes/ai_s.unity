@@ -1496,6 +1496,36 @@ Transform:
   m_Father: {fileID: 602543276}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &520666660
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1741505065087144, guid: 77c5b85ec6b9ec749907dcf5d0c8acc4,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 520666661}
+  m_Layer: 0
+  m_Name: groundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &520666661
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4744549128280260, guid: 77c5b85ec6b9ec749907dcf5d0c8acc4,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 520666660}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 841763007}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &525463485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1589,7 +1619,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -8.8, y: -1.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1365811798}
   m_Father: {fileID: 900843969}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1673,9 +1704,15 @@ MonoBehaviour:
   start_position: {fileID: 1329953234}
   playerR: {fileID: 530089441}
   ballR: {fileID: 1453042926}
+  isJumping: 0
   canKick: 0
   getDistance: 0
   isBallPlayable: 0
+  groundCheck: {fileID: 1365811798}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
+  grounded: 0
 --- !u!212 &530089443
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1807,7 +1844,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 43.7, y: -1.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2042447614}
   m_Father: {fileID: 900843969}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1891,9 +1929,15 @@ MonoBehaviour:
   start_position: {fileID: 2134255498}
   playerR: {fileID: 536650051}
   ballR: {fileID: 1453042926}
+  isJumping: 0
   canKick: 0
   getDistance: 0
   isBallPlayable: 0
+  groundCheck: {fileID: 2042447614}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
+  grounded: 0
 --- !u!212 &536650053
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2939,7 +2983,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -28.6, y: -1.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 520666661}
   m_Father: {fileID: 900843969}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3023,9 +3068,15 @@ MonoBehaviour:
   start_position: {fileID: 1825673079}
   playerR: {fileID: 841763010}
   ballR: {fileID: 1453042926}
+  isJumping: 0
   canKick: 0
   getDistance: 0
   isBallPlayable: 0
+  groundCheck: {fileID: 520666661}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
+  grounded: 0
 --- !u!212 &841763012
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3444,7 +3495,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -53.27, y: -1.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1867795901}
   m_Father: {fileID: 900843969}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3528,9 +3580,15 @@ MonoBehaviour:
   start_position: {fileID: 610001888}
   playerR: {fileID: 1085578616}
   ballR: {fileID: 1453042926}
+  isJumping: 0
   canKick: 0
   getDistance: 0
   isBallPlayable: 0
+  groundCheck: {fileID: 1867795901}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
+  grounded: 0
 --- !u!212 &1085578618
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4049,6 +4107,7 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1237314180}
+<<<<<<< HEAD
 --- !u!1 &1262526908
 GameObject:
   m_ObjectHideFlags: 0
@@ -4125,6 +4184,38 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1262526908}
+=======
+--- !u!1 &1241222233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1741505065087144, guid: 77c5b85ec6b9ec749907dcf5d0c8acc4,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1241222234}
+  m_Layer: 0
+  m_Name: groundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1241222234
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4744549128280260, guid: 77c5b85ec6b9ec749907dcf5d0c8acc4,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1241222233}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2123717682}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+>>>>>>> 50bb0520cf3fb93d6b801e3e17f4af23a71ab349
 --- !u!1 &1285521098
 GameObject:
   m_ObjectHideFlags: 0
@@ -4210,7 +4301,41 @@ Transform:
   m_Father: {fileID: 900843969}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &1429204976
+=======
+--- !u!1 &1365811797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1741505065087144, guid: 77c5b85ec6b9ec749907dcf5d0c8acc4,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1365811798}
+  m_Layer: 0
+  m_Name: groundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1365811798
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4744549128280260, guid: 77c5b85ec6b9ec749907dcf5d0c8acc4,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1365811797}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: -0.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 530089438}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1453042922
+>>>>>>> 50bb0520cf3fb93d6b801e3e17f4af23a71ab349
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -5492,6 +5617,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+<<<<<<< HEAD
 --- !u!1 &1838705633
 GameObject:
   m_ObjectHideFlags: 0
@@ -5779,6 +5905,68 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2076595210}
+=======
+--- !u!1 &1867795900
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1741505065087144, guid: 77c5b85ec6b9ec749907dcf5d0c8acc4,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1867795901}
+  m_Layer: 0
+  m_Name: groundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1867795901
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4744549128280260, guid: 77c5b85ec6b9ec749907dcf5d0c8acc4,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1867795900}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.6999999, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1085578613}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2042447613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1741505065087144, guid: 77c5b85ec6b9ec749907dcf5d0c8acc4,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2042447614}
+  m_Layer: 0
+  m_Name: groundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2042447614
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4744549128280260, guid: 77c5b85ec6b9ec749907dcf5d0c8acc4,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2042447613}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 536650048}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+>>>>>>> 50bb0520cf3fb93d6b801e3e17f4af23a71ab349
 --- !u!1 &2123717681
 GameObject:
   m_ObjectHideFlags: 0
@@ -5810,7 +5998,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 21.4, y: -1.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1241222234}
   m_Father: {fileID: 900843969}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5895,9 +6084,15 @@ MonoBehaviour:
   start_position: {fileID: 1657176127}
   playerR: {fileID: 2123717685}
   ballR: {fileID: 1453042926}
+  isJumping: 0
   canKick: 0
   getDistance: 0
   isBallPlayable: 0
+  groundCheck: {fileID: 1241222234}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
+  grounded: 0
 --- !u!212 &2123717687
 SpriteRenderer:
   m_ObjectHideFlags: 0
