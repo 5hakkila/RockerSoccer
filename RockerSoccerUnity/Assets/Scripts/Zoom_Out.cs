@@ -18,11 +18,17 @@ public class Zoom_Out : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (camera.transform.position.y > 0)
+        if (GameObject.Find("Game_Manager").GetComponent<Game_Manager>().releaseBall == true)
         {
-            m_OrthographicCamera.orthographicSize  = 4 +  camera.transform.position.y ;
 
+            if (camera.transform.position.y > 0)
+            {
+                m_OrthographicCamera.orthographicSize = 4 + camera.transform.position.y;
+
+            }
         }
+        else
+            m_OrthographicCamera.orthographicSize = 4 + 1.83f;
 
 
 

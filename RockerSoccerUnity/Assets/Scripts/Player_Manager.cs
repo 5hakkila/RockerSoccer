@@ -24,6 +24,8 @@ public class Player_Manager : MonoBehaviour {
 
     public float sendShortest;
     int minIndex;
+
+    public bool isBallDisabled = false;
     // Use this for initialization
     void Start() {
 
@@ -42,54 +44,77 @@ public class Player_Manager : MonoBehaviour {
         }
 
 
-        // activate selected player and deactivate others
-        if (selected == Selected.Player1)
+
+
+        if (GameObject.Find("Game_Manager").GetComponent<Game_Manager>().releaseBall == true && isBallDisabled ==false)
         {
-            
-            GameObject.Find("Player_1").GetComponent<Player_Control>().active = true;
+            // activate selected player and deactivate others
+            if (selected == Selected.Player1)
+            {
+
+                GameObject.Find("Player_1").GetComponent<Player_Control>().active = true;
+            }
+            else
+                GameObject.Find("Player_1").GetComponent<Player_Control>().active = false;
+
+            if (selected == Selected.Player2)
+            {
+                GameObject.Find("Player_2").GetComponent<Player_Control>().active = true;
+            }
+            else
+                GameObject.Find("Player_2").GetComponent<Player_Control>().active = false;
+
+            if (selected == Selected.Player3)
+            {
+                GameObject.Find("Player_3").GetComponent<Player_Control>().active = true;
+            }
+            else
+                GameObject.Find("Player_3").GetComponent<Player_Control>().active = false;
+
+            if (selected == Selected.Player4)
+            {
+                GameObject.Find("Player_4").GetComponent<Player_Control>().active = true;
+            }
+            else
+                GameObject.Find("Player_4").GetComponent<Player_Control>().active = false;
+
+            if (selected == Selected.Player5)
+            {
+                GameObject.Find("Player_5").GetComponent<Player_Control>().active = true;
+            }
+            else
+                GameObject.Find("Player_5").GetComponent<Player_Control>().active = false;
+
+            //find index of min distance
+            minIndex = Array.IndexOf(player_array, player_array.Min());
+
+            // select player state based on index
+            if (minIndex == 0) { selected = Selected.Player1; }
+            if (minIndex == 1) { selected = Selected.Player2; }
+            if (minIndex == 2) { selected = Selected.Player3; }
+            if (minIndex == 3) { selected = Selected.Player4; }
+            if (minIndex == 4) { selected = Selected.Player5; }
+
+
         }
-        else
+        if (GameObject.Find("Game_Manager").GetComponent<Game_Manager>().releaseBall == false )
+        {
             GameObject.Find("Player_1").GetComponent<Player_Control>().active = false;
-
-        if (selected == Selected.Player2)
-        {
-            GameObject.Find("Player_2").GetComponent<Player_Control>().active = true;
-        }
-        else
-        GameObject.Find("Player_2").GetComponent<Player_Control>().active = false;
-
-        if (selected == Selected.Player3)
-        {
-            GameObject.Find("Player_3").GetComponent<Player_Control>().active = true;
-        }
-        else
-        GameObject.Find("Player_3").GetComponent<Player_Control>().active = false;
-
-        if (selected == Selected.Player4)
-        {
-            GameObject.Find("Player_4").GetComponent<Player_Control>().active = true;
-        }
-        else
+            GameObject.Find("Player_2").GetComponent<Player_Control>().active = false;
+            GameObject.Find("Player_3").GetComponent<Player_Control>().active = false;
             GameObject.Find("Player_4").GetComponent<Player_Control>().active = false;
-
-        if (selected == Selected.Player5)
-        {
-            GameObject.Find("Player_5").GetComponent<Player_Control>().active = true;
+            GameObject.Find("Player_5").GetComponent<Player_Control>().active = false;
         }
-        else
+
+        if (isBallDisabled == true)
+        {
+            GameObject.Find("Player_1").GetComponent<Player_Control>().active = false;
+            GameObject.Find("Player_2").GetComponent<Player_Control>().active = false;
+            GameObject.Find("Player_3").GetComponent<Player_Control>().active = false;
+            GameObject.Find("Player_4").GetComponent<Player_Control>().active = false;
             GameObject.Find("Player_5").GetComponent<Player_Control>().active = false;
 
-        //find index of min distance
-         minIndex = Array.IndexOf(player_array, player_array.Min());
-
-        // select player state based on index
-        if (minIndex == 0) { selected = Selected.Player1; }
-        if (minIndex == 1) { selected = Selected.Player2; }
-        if (minIndex == 2) { selected = Selected.Player3; }
-        if (minIndex == 3) { selected = Selected.Player4; }
-        if (minIndex == 4) { selected = Selected.Player5; }
-
-
+        }
 
 
     }

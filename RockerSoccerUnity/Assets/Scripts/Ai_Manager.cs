@@ -21,6 +21,7 @@ public class Ai_Manager : MonoBehaviour {
 
     public float sendShortest;
     int minIndex;
+    public bool isBallDisabled = false;
     // Use this for initialization
     void Start()
     {
@@ -41,55 +42,81 @@ public class Ai_Manager : MonoBehaviour {
         }
 
 
-        // activate selected player and deactivate others
-        if (selected == Selected.AI_1)
+        if (GameObject.Find("Game_Manager").GetComponent<Game_Manager>().releaseBall == true && isBallDisabled == false)
         {
 
-            GameObject.Find("Ai_1").GetComponent<Basic_Ai>().active = true;
+            // activate selected player and deactivate others
+            if (selected == Selected.AI_1)
+            {
+
+                GameObject.Find("Ai_1").GetComponent<Basic_Ai>().active = true;
+            }
+            else
+                GameObject.Find("Ai_1").GetComponent<Basic_Ai>().active = false;
+
+            if (selected == Selected.AI_2)
+            {
+                GameObject.Find("Ai_2").GetComponent<Basic_Ai>().active = true;
+            }
+            else
+                GameObject.Find("Ai_2").GetComponent<Basic_Ai>().active = false;
+
+            if (selected == Selected.AI_3)
+            {
+                GameObject.Find("Ai_3").GetComponent<Basic_Ai>().active = true;
+            }
+            else
+                GameObject.Find("Ai_3").GetComponent<Basic_Ai>().active = false;
+
+            if (selected == Selected.AI_4)
+            {
+                GameObject.Find("Ai_4").GetComponent<Basic_Ai>().active = true;
+            }
+            else
+                GameObject.Find("Ai_4").GetComponent<Basic_Ai>().active = false;
+
+            if (selected == Selected.AI_5)
+            {
+                GameObject.Find("Ai_5").GetComponent<Basic_Ai>().active = true;
+            }
+            else
+                GameObject.Find("Ai_5").GetComponent<Basic_Ai>().active = false;
+
+            //find index of min distance
+            minIndex = Array.IndexOf(ai_array_D, ai_array_D.Min());
+
+            // select player state based on index
+            if (minIndex == 0) { selected = Selected.AI_1; }
+            if (minIndex == 1) { selected = Selected.AI_2; }
+            if (minIndex == 2) { selected = Selected.AI_3; }
+            if (minIndex == 3) { selected = Selected.AI_4; }
+            if (minIndex == 4) { selected = Selected.AI_5; }
+
+
+
         }
-        else
+        if (GameObject.Find("Game_Manager").GetComponent<Game_Manager>().releaseBall == false)
+        {
             GameObject.Find("Ai_1").GetComponent<Basic_Ai>().active = false;
-
-        if (selected == Selected.AI_2)
-        {
-            GameObject.Find("Ai_2").GetComponent<Basic_Ai>().active = true;
-        }
-        else
             GameObject.Find("Ai_2").GetComponent<Basic_Ai>().active = false;
-
-        if (selected == Selected.AI_3)
-        {
-            GameObject.Find("Ai_3").GetComponent<Basic_Ai>().active = true;
-        }
-        else
             GameObject.Find("Ai_3").GetComponent<Basic_Ai>().active = false;
-
-        if (selected == Selected.AI_4)
-        {
-            GameObject.Find("Ai_4").GetComponent<Basic_Ai>().active = true;
-        }
-        else
             GameObject.Find("Ai_4").GetComponent<Basic_Ai>().active = false;
-
-        if (selected == Selected.AI_5)
-        {
-            GameObject.Find("Ai_5").GetComponent<Basic_Ai>().active = true;
-        }
-        else
             GameObject.Find("Ai_5").GetComponent<Basic_Ai>().active = false;
 
-        //find index of min distance
-        minIndex = Array.IndexOf(ai_array_D, ai_array_D.Min());
-
-        // select player state based on index
-        if (minIndex == 0) { selected = Selected.AI_1; }
-        if (minIndex == 1) { selected = Selected.AI_2; }
-        if (minIndex == 2) { selected = Selected.AI_3; }
-        if (minIndex == 3) { selected = Selected.AI_4; }
-        if (minIndex == 4) { selected = Selected.AI_5; }
 
 
+        }
+        if (isBallDisabled == true)
+        {
+            GameObject.Find("Ai_1").GetComponent<Basic_Ai>().active = false;
+            GameObject.Find("Ai_2").GetComponent<Basic_Ai>().active = false;
+            GameObject.Find("Ai_3").GetComponent<Basic_Ai>().active = false;
+            GameObject.Find("Ai_4").GetComponent<Basic_Ai>().active = false;
+            GameObject.Find("Ai_5").GetComponent<Basic_Ai>().active = false;
 
+
+
+        }
 
     }
 

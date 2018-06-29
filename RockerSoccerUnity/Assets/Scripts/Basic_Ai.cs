@@ -22,7 +22,7 @@ public class Basic_Ai : MonoBehaviour {
     Vector2 startDirection;
     Vector2 direction;
     public float getDistance;
-
+    public bool isBallPlayable = false;
 
     //  public bool canLaunch = true;
     // Use this for initialization
@@ -51,16 +51,7 @@ public class Basic_Ai : MonoBehaviour {
             Physics2D.IgnoreLayerCollision(8, 9, true);
 
     */
-        if (getDistance < 2.0f)
-        {
-            StartCoroutine(Kick());
-            
-        }
-        if (getDistance > 2.0f)
-        {
-            canKick = false;
-
-        }
+       
 
 
 
@@ -70,7 +61,18 @@ public class Basic_Ai : MonoBehaviour {
 
             // getDistance between player and ball
             getDistance = GameObject.Find("Ai_Manager").GetComponent<Ai_Manager>().sendShortest;
+          //  Debug.Log(getDistance);
 
+            if (getDistance < 2.0f && getDistance != 0.0f)
+            {
+                StartCoroutine(Kick());
+
+            }
+            if (getDistance > 2.0f)
+            {
+                canKick = false;
+
+            }
 
             //  transform.position = Vector2.MoveTowards(player.transform.position, ball.position,2.0f *Time.deltaTime);
 
@@ -89,9 +91,9 @@ public class Basic_Ai : MonoBehaviour {
 
             }
 
-            if (canKick ==true && getDistance < 0.8f)
+            if (canKick ==true && getDistance < 0.8f && isBallPlayable == true)
             {
-                Vector2 direction = new Vector2(-10,10);
+                Vector2 direction = new Vector2(Random.Range(-10.0f,0.0f), Random.Range(10.0f, 0.0f));
                 direction.Normalize();
 
                ballR.velocity = new Vector2(0.0f, 0.0f);
@@ -106,12 +108,12 @@ public class Basic_Ai : MonoBehaviour {
             transform.position = Vector2.MoveTowards(opponentT.transform.position, start_position.position, 0.1f);
 
 
-        if (opponentR.velocity.x > 0 && !facingRight)
+        if (opponentR.velocity.x > 0 && !facingRight && Mathf.Abs(opponentT.transform.position.x - ball.transform.position.x) > 0.1f)
         {
 
             Flip();
         }
-        if (opponentR.velocity.x < 0 && facingRight)
+        if (opponentR.velocity.x < 0 && facingRight && Mathf.Abs(opponentT.transform.position.x - ball.transform.position.x) > 0.1f)
         {
 
             Flip();
@@ -133,10 +135,20 @@ public class Basic_Ai : MonoBehaviour {
 
     IEnumerator Kick()
     {
+       
         canKick = true;
         yield return new WaitForEndOfFrame();
         canKick = false;
     }
+    public void EnableBall()
+    {
+        isBallPlayable = true;
 
+    }
+    public void DisableBall()
+    {
+        isBallPlayable = false;
+
+    }
 
 }

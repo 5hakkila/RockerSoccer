@@ -35,7 +35,8 @@ public class Player_Control : MonoBehaviour {
     Vector2 startDirection;
     Vector2 direction;
     public float getDistance;
-
+    public bool isBallPlayable = false;
+   // public GameObject getInput;
 
   //  public bool canLaunch = true;
     // Use this for initialization
@@ -46,7 +47,13 @@ public class Player_Control : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-       
+        //for internal access
+        /*
+        if (getInput.GetComponent<TouchControl>().inputState == TouchControl.InputState.Down)
+        {
+
+        }
+       */
         //*********************************************************************************************
         
         //ignore collision between player and ball
@@ -108,11 +115,11 @@ public class Player_Control : MonoBehaviour {
            
             if (TouchControl.inputState == TouchControl.InputState.Down)
             {
-                print("yo");
+                
 
             }
 
-            if (TouchControl.inputState == TouchControl.InputState.UpperRight && canKick ==true)
+            if (TouchControl.inputState == TouchControl.InputState.UpperRight && canKick ==true && isBallPlayable == true)
             {
 
                 // ballR.AddForce(direction * 1.0f * 200.0f);           
@@ -121,7 +128,7 @@ public class Player_Control : MonoBehaviour {
             }
 
             
-            if (TouchControl.inputState == TouchControl.InputState.Up && canKick == true)
+            if (TouchControl.inputState == TouchControl.InputState.Up && canKick == true && isBallPlayable == true)
             {
                 ballR.velocity = new Vector2(0.0f, 0.0f);
                 ballR.AddForce(direction * 1.0f * kickForce);
@@ -129,25 +136,25 @@ public class Player_Control : MonoBehaviour {
                 //  playerR.AddForce(new Vector2(0.0f, 600.0f));
                 // ballR.AddForce(direction * 1.0f  * 200.0f);     
 
-                print("Up");
+               
             }
 
 
-            if (TouchControl.inputState == TouchControl.InputState.UpperLeft && canKick == true)
+            if (TouchControl.inputState == TouchControl.InputState.UpperLeft && canKick == true && isBallPlayable == true)
             {
                 ballR.velocity = new Vector2(0.0f, 0.0f);
                 ballR.AddForce(direction * 1.0f * kickForce);
                 // ballR.AddForce(direction * 1.0f  * 200.0f);    
 
             }
-            if (TouchControl.inputState == TouchControl.InputState.Left && canKick == true)
+            if (TouchControl.inputState == TouchControl.InputState.Left && canKick == true && isBallPlayable == true)
             {
                 ballR.velocity = new Vector2(0.0f, 0.0f);
                 ballR.AddForce(direction * 1.0f * kickForce);
                 // ballR.AddForce(direction * 1.0f  * 200.0f);    
 
             }
-            if (TouchControl.inputState == TouchControl.InputState.Right && canKick == true)
+            if (TouchControl.inputState == TouchControl.InputState.Right && canKick == true && isBallPlayable == true)
             {
                 ballR.velocity = new Vector2(0.0f, 0.0f);
                 ballR.AddForce(direction * 1.0f * kickForce);
@@ -159,11 +166,12 @@ public class Player_Control : MonoBehaviour {
             transform.position = Vector2.MoveTowards(player.transform.position, start_position.position, 0.1f);
 
 
-        if (playerR.velocity.x > 0 && !facingRight) {
+        if (playerR.velocity.x > 0 && !facingRight && Mathf.Abs(player.transform.position.x - ball.transform.position.x) > 0.1f)
+        {
 
             Flip();
         }
-        if (playerR.velocity.x < 0 && facingRight)
+        if (playerR.velocity.x < 0 && facingRight && Mathf.Abs(player.transform.position.x - ball.transform.position.x) > 0.1f)
         {
 
             Flip();
@@ -181,6 +189,15 @@ public class Player_Control : MonoBehaviour {
         transform.localScale = theScale;
     }
 
+    public void EnableBall()
+    {
+        isBallPlayable = true;
 
+    }
+    public void DisableBall()
+    {
+        isBallPlayable = false;
+
+    }
 
 }
