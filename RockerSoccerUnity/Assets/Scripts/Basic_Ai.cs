@@ -24,10 +24,6 @@ public class Basic_Ai : MonoBehaviour {
     public float getDistance;
     public bool isBallPlayable = false;
 
-    
-
-
-
     //  public bool canLaunch = true;
     // Use this for initialization
     void Start()
@@ -44,7 +40,7 @@ public class Basic_Ai : MonoBehaviour {
 
         //ignore collision between player and ball
         Physics2D.IgnoreLayerCollision(8, 9, true);
-        Physics2D.IgnoreLayerCollision(8, 8, true);
+
         /*
         if (TouchControl.inputState == TouchControl.InputState.LowerRight || TouchControl.inputState == TouchControl.InputState.LowerLeft)
             { 
@@ -55,7 +51,7 @@ public class Basic_Ai : MonoBehaviour {
             Physics2D.IgnoreLayerCollision(8, 9, true);
 
     */
-
+       
 
 
 
@@ -127,10 +123,6 @@ public class Basic_Ai : MonoBehaviour {
 
 
     }
-   
-
-
-
     void Flip()
     {
         facingRight = !facingRight;
