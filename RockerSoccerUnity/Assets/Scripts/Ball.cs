@@ -80,4 +80,10 @@ public class Ball : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(9, 12, false);
     }
 
+    public void StopBall()
+    {
+       ball.velocity = new Vector2(0, 0);
+
+    }
+
 }

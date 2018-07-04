@@ -13,7 +13,8 @@ public class Basic_Ai : MonoBehaviour {
 
       
     public bool canKick = false;
-    public bool kicked = false;
+    public bool kicked = false; // no action currently
+    private int kickTimer = 0; // basicly bool to stop multiple kicks
     private float kickForce = 200.0f;
 
     bool facingRight = true;
@@ -58,20 +59,21 @@ public class Basic_Ai : MonoBehaviour {
         if (active == true)
         {
 
-
+           
             // getDistance between player and ball
             getDistance = GameObject.Find("Ai_Manager").GetComponent<Ai_Manager>().sendShortest;
           //  Debug.Log(getDistance);
 
             if (getDistance < 2.0f && getDistance != 0.0f)
             {
+               
                 StartCoroutine(Kick());
-
+               
             }
             if (getDistance > 2.0f)
             {
                 canKick = false;
-
+                kickTimer = 0;
             }
 
             //  transform.position = Vector2.MoveTowards(player.transform.position, ball.position,2.0f *Time.deltaTime);
@@ -91,13 +93,16 @@ public class Basic_Ai : MonoBehaviour {
 
             }
 
-            if (canKick ==true && getDistance < 0.8f && isBallPlayable == true)
+            if (canKick ==true && getDistance < 0.8f && isBallPlayable == true )
             {
-                Vector2 direction = new Vector2(Random.Range(-10.0f,0.0f), Random.Range(10.0f, 0.0f));
-                direction.Normalize();
+                if (kickTimer ==0) {
+                    Vector2 direction = new Vector2(Random.Range(-10.0f, 0.0f), Random.Range(10.0f, 0.0f));
+                    direction.Normalize();
 
-               ballR.velocity = new Vector2(0.0f, 0.0f);
-               ballR.AddForce(direction * 1.0f * kickForce);
+                    ballR.velocity = new Vector2(0.0f, 0.0f);
+                    ballR.AddForce(direction * 1.0f * kickForce );
+                    kickTimer += 1;
+                }
             }
 
 
@@ -135,10 +140,11 @@ public class Basic_Ai : MonoBehaviour {
 
     IEnumerator Kick()
     {
-       
+        
         canKick = true;
         yield return new WaitForEndOfFrame();
         canKick = false;
+       
     }
     public void EnableBall()
     {

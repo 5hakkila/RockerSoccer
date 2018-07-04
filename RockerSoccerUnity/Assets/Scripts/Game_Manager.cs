@@ -14,6 +14,8 @@ public class Game_Manager : MonoBehaviour {
         END,
         SCORE,
         GOALKICK,
+        SLOWMO,
+        PLAY
     };
 
     GameState gameState;
@@ -22,7 +24,7 @@ public class Game_Manager : MonoBehaviour {
     public bool enableBall;
     private float currentTime;
     private float roundTime;
-    private float startTime = 30.0f;
+    private float startTime = 90.0f;
 
     public Text UiTime;
     public Text UiScoreTeam1;
@@ -44,8 +46,10 @@ public class Game_Manager : MonoBehaviour {
 
     private bool startClock = false;
 
-    void Start() {
+    public bool SlowMo = false;
 
+    void Start() {
+       // Application.targetFrameRate = 60;
         gameState = GameState.STARTGAME;
         EnableBall();
         StartCoroutine(StartDelay());
@@ -87,7 +91,18 @@ public class Game_Manager : MonoBehaviour {
         UiScoreTeam1.text = score_Team1.ToString();
         UiScoreTeam2.text = score_Team2.ToString();
 
-
+        if (TouchControl.inputState == TouchControl.InputState.InputStart && SlowMo ==true && gameState != GameState.END)
+        {
+            Time.timeScale = 0.5f;
+            Time.fixedDeltaTime = 0.02F * Time.timeScale;
+           
+        }
+        else
+        {
+            Time.timeScale = 1.0f;
+            Time.fixedDeltaTime = 0.02F * Time.timeScale;
+           
+        }
     }
 
    
@@ -145,5 +160,15 @@ public class Game_Manager : MonoBehaviour {
        
     }
 
+    public void SlowMoActivate()
+    {
+        SlowMo = true;
+
+    }
+    public void SlowMoDeActivate()
+    {
+        SlowMo = false;
+
+    }
 
 }
