@@ -9,7 +9,6 @@ public class MenuScene : MonoBehaviour {
     public void onStartClicked()
     {
         SceneManager.LoadScene("ai_s");
-        PlayerPrefs.SetInt("nextScene", 2);
     }
-  
+
 }

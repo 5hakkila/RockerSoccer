@@ -10,13 +10,10 @@ public class LevelLoader : MonoBehaviour {
     public Slider slider;
     public Text progressText;
     private float loadingStarted;
-    public int nextScene;
 
     public void Start()
     {
         loadingStarted = Time.time;
-        nextScene = PlayerPrefs.GetInt("NextScene");
-        Debug.Log("nextScene:" + nextScene);
         
     }
     public void SetMinimumLoadingTime(float minTimef)
@@ -25,12 +22,10 @@ public class LevelLoader : MonoBehaviour {
     }
 
 
-    public void LoadLevel ()
+    public void LoadLevel (int sceneIndex)
     {
-        int sceneIndex = nextScene;
         StartCoroutine(LoadAsynchronously(sceneIndex));
         Debug.Log("minimum set to" + minTime);
-        Debug.Log("NextSceneLoadLevel" + nextScene);
 
 
     }
@@ -54,10 +49,6 @@ public class LevelLoader : MonoBehaviour {
         
      
            
-    }
-    private void Update()
-    {
-        LoadLevel();
     }
 
 }
