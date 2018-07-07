@@ -15,6 +15,7 @@ public class LevelLoader : MonoBehaviour {
     public void Start()
     {
         nextScene = PlayerPrefs.GetInt("nextScene");
+        LoadLevel();
         //loadingStarted = Time.time;
         
     }
@@ -54,7 +55,7 @@ public class LevelLoader : MonoBehaviour {
     }
     private void Update()
     {
-        LoadLevel();
+        //LoadLevel();
     }
 
 }
