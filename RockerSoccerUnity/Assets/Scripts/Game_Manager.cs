@@ -79,10 +79,10 @@ public class Game_Manager : MonoBehaviour {
              StartCoroutine(WaitForStartClicked());
              StartButton = GameObject.Find("StartButton");
 
-        gameState = GameState.STARTGAME;
-        EnableBall();
+      //  gameState = GameState.STARTGAME;
+       // EnableBall();
         startTime = 90.0f;
-        StartCoroutine(StartDelay());
+       // StartCoroutine(StartDelay());
         resetTime = 0.0f;
 
         //  StartCoroutine(ScoreDelay());
