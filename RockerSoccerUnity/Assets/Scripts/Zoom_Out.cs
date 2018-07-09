@@ -15,6 +15,7 @@ public class Zoom_Out : MonoBehaviour
     public Transform cameraStart;
     public float size_Offset;
     public bool slow_Mo_Camera = false;
+    public float send_Force = 0.0f;
     // Use this for initialization
     void Start()
     {
@@ -50,22 +51,34 @@ public class Zoom_Out : MonoBehaviour
 
         if (GameObject.Find("Game_Manager").GetComponent<Game_Manager>().SlowMo == true && TouchControl.inputState == TouchControl.InputState.InputStart)
         {
+            if (GameObject.Find("Ball").GetComponent<Ball>().grounded == true)
+            {
+                GameObject.Find("line").SendMessage("EnableDisplay");
+                GameObject.Find("arrow").GetComponent<SpriteRenderer>().enabled = true;
+            }
+            send_Force += 50 * Time.deltaTime;
             slow_Mo_Camera = true;
             if (inputAngle >= 0.0f && inputAngle <= 90)
             {
                 Camera.main.transform.position = Vector3.Lerp(camera.transform.position, camera.transform.position + new Vector3(15.0f, 0.0f, 0.0f), 0.7f * Time.deltaTime);
-                size_Offset += 0.1f ;
-                
+                size_Offset += 0.1f;
+
             }
             if (inputAngle > 90.0f && inputAngle <= 180)
             {
                 Camera.main.transform.position = Vector3.Lerp(camera.transform.position, camera.transform.position - new Vector3(15.0f, 0.0f, 0.0f), 0.7f * Time.deltaTime);
                 size_Offset += 0.1f;
-                
+
             }
         }
         else
         {
+            if (GameObject.Find("Ball").GetComponent<Ball>().grounded == false)
+            { 
+            GameObject.Find("line").SendMessage("DisableDisplay");
+            GameObject.Find("arrow").GetComponent<SpriteRenderer>().enabled = false;
+            }
+            send_Force = 0.0f;
             Camera.main.transform.position = Vector3.Lerp(camera.transform.position, cameraStart.transform.position, 0.7f * Time.deltaTime);
             size_Offset -= 0.2f;
             slow_Mo_Camera = false;
@@ -73,6 +86,7 @@ public class Zoom_Out : MonoBehaviour
             {
                 size_Offset = 0.0f;
             }
+           
         }
     }
 }

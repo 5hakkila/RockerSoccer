@@ -26,9 +26,10 @@ public class TouchControl : MonoBehaviour {
  
     public  float angle;
     public float  camera_Angle;
-    private float swipe_Distance_X;
-    private float swipe_Distance_Y;
+    public float swipe_Distance_X;
+    public float swipe_Distance_Y;
 
+    public bool end = false;
     private void Start()
     {
         inputState = InputState.NoInput;
@@ -48,7 +49,7 @@ public class TouchControl : MonoBehaviour {
             {
                 start_Position = touch.position;
                 end_Position = touch.position;
-               
+                end = false;
             }
             //swipe move
             if (touch.phase == TouchPhase.Moved)
@@ -60,12 +61,12 @@ public class TouchControl : MonoBehaviour {
                 inputState = InputState.InputStart;
                 //for camera move
                 camera_Angle = Mathf.Atan2((end_Position.y - start_Position.y), (end_Position.x - start_Position.x)) * 57.2957795f;
-
+                end = false;
             }
             //swipe end. determine angles and assign states
             if (touch.phase == TouchPhase.Ended)
             {
-
+                end = true;
                 //angle = Mathf.Atan2((end_Position.x - start_Position.x),(end_Position.y - start_Position.y)) * 57.2957795f;
 
                 angle = Mathf.Atan2((end_Position.y - start_Position.y),(end_Position.x - start_Position.x)) * 57.2957795f;

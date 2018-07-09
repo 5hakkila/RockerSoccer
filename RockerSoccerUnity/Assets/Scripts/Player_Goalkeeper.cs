@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_Control : MonoBehaviour {
-
+public class Player_Goalkeeper : MonoBehaviour {
     public enum PlayerState
     {
         LEFT,
@@ -15,7 +14,7 @@ public class Player_Control : MonoBehaviour {
     };
 
     PlayerState player_state;
-   
+
     public bool active = false;
     public Transform ball;
     public Transform player;
@@ -23,17 +22,17 @@ public class Player_Control : MonoBehaviour {
     public Rigidbody2D playerR;
     public Rigidbody2D ballR;
 
-    private  float timer = 0.0f;
-   
-    private float jumpForce =400.0f;
-    
+    private float timer = 0.0f;
+
+    private float jumpForce = 400.0f;
+
     public bool canKick = false;
     public float kickForce = 0.0f;
     public float extra_Force = 0.0f;
 
 
     bool facingRight = true;
-   
+
     Vector2 endDirection;
     Vector2 startDirection;
     Vector2 direction;
@@ -57,14 +56,16 @@ public class Player_Control : MonoBehaviour {
     public float swipe_Distance_y;
     public float swipe_Distance;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         player_state = PlayerState.IDLE;
-	}
+    }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         extra_Force = GameObject.Find("Main Camera").GetComponent<Zoom_Out>().send_Force;
-       
+
         //for internal access
         /*
         if (getInput.GetComponent<TouchControl>().inputState == TouchControl.InputState.Down)
@@ -90,15 +91,15 @@ public class Player_Control : MonoBehaviour {
         if (getDistance < 2.0f)
         {
             canKick = true;
-         
+
         }
         if (getDistance > 2.0f)
         {
             canKick = false;
-          
+
         }
 
-   //     print(getDistance);
+        //     print(getDistance);
 
 
 
@@ -106,15 +107,15 @@ public class Player_Control : MonoBehaviour {
 
         if (active == true)
         {
-           
+
             if (getDistance < 2.0f && getDistance != 0.0f)
             {
-               
+
                 GameObject.Find("Game_Manager").SendMessage("SlowMoActivate");
             }
             if (getDistance >= 2.0f && getDistance != 0.0f)
             {
-               
+
                 GameObject.Find("Game_Manager").SendMessage("SlowMoDeActivate");
             }
 
@@ -143,7 +144,7 @@ public class Player_Control : MonoBehaviour {
             }
 
 
-            
+
 
             //move player right
             if (player.transform.position.x < ball.transform.position.x && getDistance > 0.8f && grounded == true && slidingLeft == false && slidingRight == false)
@@ -164,7 +165,7 @@ public class Player_Control : MonoBehaviour {
 
 
             // move player left
-            if (player.transform.position.x > ball.transform.position.x && getDistance > 0.8f && grounded == true && slidingLeft ==false && slidingRight == false )
+            if (player.transform.position.x > ball.transform.position.x && getDistance > 0.8f && grounded == true && slidingLeft == false && slidingRight == false)
             {
                 player_state = PlayerState.LEFT;
                 //    playerR.velocity = new Vector2(-4.0f, 0.0f);
@@ -186,7 +187,7 @@ public class Player_Control : MonoBehaviour {
                 GameObject.Find("Ball").SendMessage("StopBall");
             }
 
-            
+
 
 
 
@@ -198,10 +199,10 @@ public class Player_Control : MonoBehaviour {
 
             }
             //slide
-            if (TouchControl.inputState == TouchControl.InputState.LowerRight && canKick == false && isBallPlayable == true && grounded == true && slideTimer == 0.0f )
+            if (TouchControl.inputState == TouchControl.InputState.LowerRight && canKick == false && isBallPlayable == true && grounded == true && slideTimer == 0.0f)
             {
                 slidingRight = true;
-               
+
 
             }
 
@@ -212,7 +213,7 @@ public class Player_Control : MonoBehaviour {
 
             }
 
-            if (slidingRight ==true)
+            if (slidingRight == true)
             {
                 slideTimer += 1.0f * Time.deltaTime;
                 if (slideTimer < 0.1f)
@@ -234,24 +235,24 @@ public class Player_Control : MonoBehaviour {
             {
                 slidingLeft = false;
                 slidingRight = false;
-                
+
             }
             if (slideTimer > 2.2f)
             {
 
-                 slideTimer = 0.0f;
+                slideTimer = 0.0f;
             }
             //slide kick
-            if (slidingRight == true && facingRight ==true && canKick == true)
+            if (slidingRight == true && facingRight == true && canKick == true)
             {
                 ballR.velocity = new Vector2(0.0f, 0.0f);
-              //  ballR.AddForce(new Vector2(1.0f, 0.0f) * 200.0f);
+                //  ballR.AddForce(new Vector2(1.0f, 0.0f) * 200.0f);
 
             }
             if (slidingLeft == true && facingRight == false && canKick == true)
             {
                 ballR.velocity = new Vector2(0.0f, 0.0f);
-              //  ballR.AddForce(new Vector2(-1.0f, 0.0f) * 200.0f);
+                //  ballR.AddForce(new Vector2(-1.0f, 0.0f) * 200.0f);
 
             }
 
@@ -318,16 +319,16 @@ public class Player_Control : MonoBehaviour {
             //on air kick header
             if (canKick == true && isBallPlayable == true && grounded == false)
             {
-                if (GameObject.Find("Ball").GetComponent<Ball>().grounded == false && TouchControl.inputState != TouchControl.InputState.NoInput)
-                { 
+                if (GameObject.Find("Ball").GetComponent<Ball>().grounded == false)
+                {
                     ballR.velocity = new Vector2(0.0f, 0.0f);
-                    ballR.AddForce(direction * 1.0f * (kickForce /1.5f));
+                    ballR.AddForce(direction * 1.0f * (kickForce / 1.5f));
 
                 }
             }
         }
         // move back to staring position
-        if (active == false && grounded ==true)
+        if (active == false && grounded == true)
         {
             transform.position = Vector2.MoveTowards(player.transform.position, start_position.position, 0.1f);
             slideTimer = 0.0f;
@@ -344,11 +345,11 @@ public class Player_Control : MonoBehaviour {
 
             Flip();
         }
-    
 
 
 
-}
+
+    }
     private void FixedUpdate()
     {
         //Ground check
@@ -373,7 +374,6 @@ public class Player_Control : MonoBehaviour {
 
     }
 
-    
 
 
 }

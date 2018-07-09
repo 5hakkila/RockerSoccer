@@ -36,7 +36,7 @@ public class Game_Manager : MonoBehaviour {
     private float currentTime;
     private float roundTime;
     public float startTime = 20.0f;
-
+    private float resetTime;
 
     public Text UiTime;
   
@@ -46,11 +46,15 @@ public class Game_Manager : MonoBehaviour {
 
     public GameObject leftGoal;
     public GameObject rightGoal;
+   
 
     public Transform ballLocation;
     public Transform ball;
+    public Transform left_End;
+    public Transform right_End;
 
     public bool releaseBall = false;
+    public bool goalkick = false;
     //  public GameObject ballObject;
     //  public GameObject PlayerObject;
 
@@ -75,6 +79,11 @@ public class Game_Manager : MonoBehaviour {
              StartCoroutine(WaitForStartClicked());
              StartButton = GameObject.Find("StartButton");
 
+        gameState = GameState.STARTGAME;
+        EnableBall();
+        startTime = 90.0f;
+        StartCoroutine(StartDelay());
+        resetTime = 0.0f;
 
         //  StartCoroutine(ScoreDelay());
         //  Instantiate(ballObject, ballLocation.position, transform.rotation);
@@ -103,76 +112,113 @@ public class Game_Manager : MonoBehaviour {
                 ball.transform.position = ballLocation.transform.position;
             }
 
-        
-        
-        
 
-            if (startClock == true)
+
+
+
+        if (startClock == true)
+        {
+            currentTime = Time.time;
+            //  Debug.Log(roundTime);
+
+            if (gameState != GameState.END)
             {
-
-            
-            
-                currentTime = Time.time;
-            
-                //  Debug.Log(roundTime);
-
-                if (gameState != GameState.END)
-                {
-                    roundTime = startTime - currentTime + startClickedTime;
-                }
+                roundTime = startTime - currentTime + resetTime;
+            }
 
 
 
-                if (roundTime <= 0.0f)
-                {
-                    gameState = GameState.END;
-                    StartCoroutine(EndGame());
-                    roundTime = 0.0f;
-
-                }
+            if (roundTime <= 0.0f)
+            {
+                gameState = GameState.END;
+                StartCoroutine(EndGame());
+                roundTime = 0.0f;
 
             }
-      
-        UiTime.text = roundTime.ToString("0");
+
+        }
+
+            UiTime.text = roundTime.ToString("0");
             UiScoreTeam1.text = score_Team1.ToString();
             UiScoreTeam2.text = score_Team2.ToString();
 
-            if (TouchControl.inputState == TouchControl.InputState.InputStart && SlowMo == true && gameState != GameState.END)
-            {
-                Time.timeScale = 0.5f;
-                Time.fixedDeltaTime = 0.02F * Time.timeScale;
+        if (TouchControl.inputState == TouchControl.InputState.InputStart && SlowMo == true && gameState != GameState.END)
+        {
+            Time.timeScale = 0.5f;
+            Time.fixedDeltaTime = 0.02F * Time.timeScale;
 
-            }
-            else
-            {
-                Time.timeScale = 1.0f;
-                Time.fixedDeltaTime = 0.02F * Time.timeScale;
+        }
+        else
+        {
+            Time.timeScale = 1.0f;
+            Time.fixedDeltaTime = 0.02F * Time.timeScale;
 
-            }
-        
+        }
     }
 
-   
-   public IEnumerator ScoreDelay()
+
+    public IEnumerator ScoreDelay()
     {
         GameObject.Find("Ball").SendMessage("DisableBall");
         yield return new WaitForSeconds(5.0f);
+        GameObject.Find("Ball").SendMessage("StopBall");
         ball.transform.position = ballLocation.transform.position;
         GameObject.Find("Ball").SendMessage("EnableBall");
         StartCoroutine(StartDelay());
-       
+
 
     }
+    public IEnumerator GoalkickDelayLeft()
+    {
+        if (gameState != GameState.END)
+        {
+            GameObject.Find("Ball").SendMessage("DisableBall");
+            yield return new WaitForSeconds(3.0f);
+            GameObject.Find("Ball").SendMessage("StopBall");
+            ball.transform.position = left_End.transform.position;
+            GameObject.Find("Ball").SendMessage("EnableBall");
+            goalkick = true;
+            StartCoroutine(StartDelay());
+        }
+
+    }
+    public IEnumerator GoalkickDelayRight()
+    {
+        if (gameState != GameState.END)
+        {
+            GameObject.Find("Ball").SendMessage("DisableBall");
+            yield return new WaitForSeconds(3.0f);
+            GameObject.Find("Ball").SendMessage("StopBall");
+            ball.transform.position = right_End.transform.position;
+            GameObject.Find("Ball").SendMessage("EnableBall");
+            goalkick = true;
+            releaseBall = false;
+            yield return new WaitForSeconds(1.0f);
+            releaseBall = true;
+            startClock = true;
+            goalkick = false;
+        }
+
+    }
+    public IEnumerator GoalkickDelay()
+    {
+        if (gameState != GameState.END)
+        {
+            releaseBall = false;
+            yield return new WaitForSeconds(1.0f);
+            releaseBall = true;
+            startClock = true;
+            goalkick = false;
+        }
+    }
+
     public IEnumerator StartDelay()
     {
-        
+
         releaseBall = false;
         yield return new WaitForSeconds(1.0f);
         releaseBall = true;
-        if (startClicked == true)
-        {
-            startClock = true;
-        }
+        startClock = true;
 
     }
 
@@ -266,4 +312,19 @@ public class Game_Manager : MonoBehaviour {
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
+
+    void ResetGame()
+    {
+        startClock = false;
+        resetTime = currentTime + 2.0f;
+        gameState = GameState.STARTGAME;
+        score_Team1 = 0;
+        score_Team2 = 0;
+        EnableBall();
+        GameEnded_text.text = ("");
+        StartCoroutine(StartDelay());
+        GameObject.Find("Ball").SendMessage("EnableBall");
+
+    }
+
 }

@@ -80,10 +80,10 @@ public class Player_Manager : MonoBehaviour {
 
             if (selected == Selected.Player5)
             {
-                GameObject.Find("Player_5").GetComponent<Player_Control>().active = true;
+                GameObject.Find("Player_5").GetComponent<Player_Goalkeeper>().active = true;
             }
             else
-                GameObject.Find("Player_5").GetComponent<Player_Control>().active = false;
+                GameObject.Find("Player_5").GetComponent<Player_Goalkeeper>().active = false;
 
             //find index of min distance
             minIndex = Array.IndexOf(player_array, player_array.Min());
@@ -103,7 +103,7 @@ public class Player_Manager : MonoBehaviour {
             GameObject.Find("Player_2").GetComponent<Player_Control>().active = false;
             GameObject.Find("Player_3").GetComponent<Player_Control>().active = false;
             GameObject.Find("Player_4").GetComponent<Player_Control>().active = false;
-            GameObject.Find("Player_5").GetComponent<Player_Control>().active = false;
+            GameObject.Find("Player_5").GetComponent<Player_Goalkeeper>().active = false;
         }
 
         if (isBallDisabled == true)
@@ -112,7 +112,7 @@ public class Player_Manager : MonoBehaviour {
             GameObject.Find("Player_2").GetComponent<Player_Control>().active = false;
             GameObject.Find("Player_3").GetComponent<Player_Control>().active = false;
             GameObject.Find("Player_4").GetComponent<Player_Control>().active = false;
-            GameObject.Find("Player_5").GetComponent<Player_Control>().active = false;
+            GameObject.Find("Player_5").GetComponent<Player_Goalkeeper>().active = false;
 
         }
 

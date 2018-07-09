@@ -100,7 +100,7 @@ public class Basic_Ai : MonoBehaviour {
                     direction.Normalize();
 
                     ballR.velocity = new Vector2(0.0f, 0.0f);
-                    ballR.AddForce(direction * 1.0f * kickForce );
+                    ballR.AddForce(direction * 1.0f * Random.Range(130.0f,300.0f));
                     kickTimer += 1;
                 }
             }

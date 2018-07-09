@@ -6,8 +6,10 @@ public class Ball : MonoBehaviour {
     public Rigidbody2D ball;
     public Transform ballT;
     public Transform ballStart;
-
-   
+    public bool grounded;
+    public Transform groundCheck;
+    private readonly float  groundRadius = 0.5f;
+    public LayerMask whatIsGround;
     // Use this for initialization
     void Start () {
 		
@@ -17,6 +19,11 @@ public class Ball : MonoBehaviour {
 	void Update () {
 		
 	}
+    private void FixedUpdate()
+    {
+        //Ground check
+        grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "LeftGoal")
@@ -33,6 +40,22 @@ public class Ball : MonoBehaviour {
             
             GameObject.Find("Game_Manager").SendMessage("ScoreDelay");
         }
+
+        if (other.gameObject.tag == "Left_End")
+        {
+            GameObject.Find("Game_Manager").SendMessage("GoalkickDelayLeft");
+
+        }
+
+        if (other.gameObject.tag == "Right_End")
+        {
+            GameObject.Find("Game_Manager").SendMessage("GoalkickDelayRight");
+            
+        }
+
+
+
+
 
     }
 
