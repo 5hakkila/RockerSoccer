@@ -9,6 +9,7 @@ public class Saver : MonoBehaviour {
     public Text levelText;
     public Text xp;
     public Slider sl;
+    public Slider musicSlider;
 
 
     public int xpOnLevel;
@@ -21,9 +22,10 @@ public class Saver : MonoBehaviour {
     {
         Save();
         level = CheckCurrentLevel();
-        Debug.Log("currentLevel:" + level);
+       // Debug.Log("currentLevel:" + level);
         levelText.text = "Level "+ level.ToString();
-        xp.text =  newTotalxp + "/" + steps[level].ToString() + " xp";  
+        xp.text =  newTotalxp + "/" + steps[level].ToString() + " xp";
+        musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
     }
 
 
@@ -33,7 +35,7 @@ public class Saver : MonoBehaviour {
         int totalxp = Load();
         newTotalxp = lastRoundxp + totalxp;
         PlayerPrefs.SetInt("totalxp", newTotalxp);
-        Debug.Log("total xp: " + totalxp);
+       // Debug.Log("total xp: " + totalxp);
         Delete();
     }
     public int Load()
