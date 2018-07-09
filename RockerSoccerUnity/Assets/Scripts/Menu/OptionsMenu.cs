@@ -1,7 +1,8 @@
-﻿
-using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine;
 
 
 
@@ -10,58 +11,82 @@ public class OptionsMenu : MonoBehaviour {
     public AudioMixer audioMixer;
     public Slider sfxSlider;
     public Slider musicSlider;
+    
+   
+
+    float savedMusicVolume;
+    bool changed = false;
+ 
+
 
    
-    float savedSFXVolume;
-    float savedMusicVolume;
-
-    
 
 
-
-    private void Start()
+    public void Awake()
     {
 
-        musicSlider.normalizedValue = -50;
-  
-        
         //Tallennetut ääniasetukset
-        savedSFXVolume = PlayerPrefs.GetFloat("SFXVolume");
+    
         savedMusicVolume = PlayerPrefs.GetFloat("MusicVolume");
 
 
         //Asetetaan tallennetut arvot
-        audioMixer.SetFloat("SFXVolume", savedSFXVolume);
-        audioMixer.SetFloat("MusicVolume", savedMusicVolume);  
+    
 
+            audioMixer.SetFloat("MusicVolume", savedMusicVolume);
+            musicSlider.value = savedMusicVolume;
+
+    
+      
 
     }
+
+    private void Update()
+    {
+
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+     
+       
+        
+        
+       
+    }
+
 
 
     public void SetMasterVolume (float MasterVolume)
     {
         audioMixer.SetFloat("MasterVolume", MasterVolume);
         PlayerPrefs.SetFloat("MasterVolume", MasterVolume);
-        PlayerPrefs.Save();   
+      
     }
 
     public void SetSFXVolume(float SFXVolume)
     {  
-        audioMixer.SetFloat("SFXVolume", SFXVolume);    
-        PlayerPrefs.SetFloat("SFXVolume", savedSFXVolume);
-        PlayerPrefs.Save();
+      //  audioMixer.SetFloat("SFXVolume", SFXVolume);    
+      //PlayerPrefs.SetFloat("SFXVolume", savedSFXVolume);
+        
     }
 
 
     public void SetMusicVolume(float MusicVolume)
     {
-        audioMixer.SetFloat("MusicVolume", MusicVolume);
-        PlayerPrefs.SetFloat("MusicVolume", MusicVolume);
-        Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
-       
+
+
+        if (MusicVolume == 0)
+        {
+            MusicVolume = -20;
+            audioMixer.SetFloat("MusicVolume", MusicVolume);
+            musicSlider.value = MusicVolume;
+           
+        }
+        else if(MusicVolume != 0)
+        {
+            PlayerPrefs.SetFloat("MusicVolume", MusicVolume);
+            musicSlider.value = MusicVolume;
+        }
 
        
-        PlayerPrefs.Save();
     }
 
     public void SetQuality (int qualityIndex)
