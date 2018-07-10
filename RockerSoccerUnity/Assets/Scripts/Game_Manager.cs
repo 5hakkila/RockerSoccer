@@ -23,11 +23,12 @@ public class Game_Manager : MonoBehaviour {
 
     GameState gameState;
 
-    GameObject StartButton;
-
-   
-    
-    private bool startClicked = false; //onko painettu start
+    public bool tie = false;
+    public bool aiWin = false;
+    public bool playerWin = false;
+    private bool isOptionsMenuOn = false; //Onko options menu klikattu päälle
+    private bool ReturnMainMenuClicked = false; //Pelin päätyttyä onko klikattu palaamainmenuun
+    private bool startClicked = false; //onko painettu START
     private float xp = 0; //saavutettu xp
     private int roundedxp; //saavutettu xp pyöristettynä, mikä tallennetaan
     private float startClickedTime; //aikaleima kun start on painettu
@@ -39,13 +40,19 @@ public class Game_Manager : MonoBehaviour {
     private float resetTime;
 
     public Text UiTime;
-  
     public Text UiScoreTeam1;
     public Text UiScoreTeam2;
     public Text GameEnded_text;
 
+    GameObject StartButton;
     public GameObject leftGoal;
     public GameObject rightGoal;
+    public GameObject gOCanvas; //GameOver canvas
+    public GameObject uiCanvas; //Ui buttons
+    public GameObject optionsMenu;
+    public GameObject resultText; //Shows the match result in the end
+    public GameObject xpResultText; //Shows gained xp in the end
+    //public GameObject canvas;
    
 
     public Transform ballLocation;
@@ -68,21 +75,34 @@ public class Game_Manager : MonoBehaviour {
 
     private void Awake()
     {
-        
-        
+        resultText = GameObject.Find("ResultText");
+        xpResultText = GameObject.Find("XpGained");
+        uiCanvas = GameObject.Find("UiCanvas");
+        gOCanvas = GameObject.Find("GameOverCanvas");
+        optionsMenu = GameObject.Find("OptionsMenu");
+        gOCanvas.SetActive(false);
+        StartButton = GameObject.Find("StartButton");
     }
 
     void Start() {
+
+
+
+        StartCoroutine(WaitForStartClicked());
         // Application.targetFrameRate = 60;
 
+        //  gameState = GameState.STARTGAME;
+        // EnableBall();
+        if (PlayerPrefs.HasKey("PlayTime"))
+        {
+            startTime = PlayerPrefs.GetFloat("PlayTime");
+        }
+        else
+        {
+            startTime = 5.0f;
+        }
         
-             StartCoroutine(WaitForStartClicked());
-             StartButton = GameObject.Find("StartButton");
-
-      //  gameState = GameState.STARTGAME;
-       // EnableBall();
-        startTime = 90.0f;
-       // StartCoroutine(StartDelay());
+        // StartCoroutine(StartDelay());
         resetTime = 0.0f;
 
         //  StartCoroutine(ScoreDelay());
@@ -104,13 +124,32 @@ public class Game_Manager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-      
-            
-        
-            if (releaseBall == false)
-            {
-                ball.transform.position = ballLocation.transform.position;
-            }
+
+
+         //Jos options menu päällä
+         if(isOptionsMenuOn == true)
+        {
+            StartButton.SetActive(false);
+            uiCanvas.SetActive(false);
+        }
+         else if(isOptionsMenuOn == false && startClicked == true)
+        {
+            uiCanvas.SetActive(true);
+        }
+         else if(isOptionsMenuOn == false && startClicked == false)
+        {
+            StartButton.SetActive(true);
+        }
+         
+
+
+
+
+
+         if (releaseBall == false)
+        {
+             ball.transform.position = ballLocation.transform.position;
+        }
 
 
 
@@ -123,7 +162,7 @@ public class Game_Manager : MonoBehaviour {
 
             if (gameState != GameState.END)
             {
-                roundTime = startTime - currentTime + resetTime;
+                roundTime = startTime - currentTime + startClickedTime;
             }
 
 
@@ -238,17 +277,37 @@ public class Game_Manager : MonoBehaviour {
         GameObject.Find("Ai_3").SendMessage("EnableBall");
         GameObject.Find("Ai_4").SendMessage("EnableBall");
         GameObject.Find("Ai_5").SendMessage("EnableBall");
+        
 
     }
 
     IEnumerator EndGame()
     {
+        
+        uiCanvas.SetActive(false); //Poistetaan uibuttonit
         GameObject.Find("Ball").SendMessage("DisableBall");
+        
         releaseBall = false;
         GameEnded_text.text = ("Game Over");
         calculateXp(); //Lasketaan xp pelin päätyttyä
-        yield return new WaitForSeconds(5.0f);
-        Debug.Log("Game ended!!!");
+        yield return new WaitForSeconds(3.0f);
+        if(playerWin == true)
+        {
+            resultText.GetComponent<Text>().text = "win";
+        }
+        else if(aiWin == true)
+        {
+            resultText.GetComponent<Text>().text = "defeat";
+        }
+        else if(tie == true)
+        {
+            resultText.GetComponent<Text>().text = "tie";
+        }
+         
+        // Debug.Log("Game ended!!!");
+        gOCanvas.SetActive(true);
+        // canvas.SetActive(false);
+        yield return new WaitUntil(() => ReturnMainMenuClicked == true);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
 
     }
@@ -271,16 +330,19 @@ public class Game_Manager : MonoBehaviour {
         
         if (scoreDifference > 0) //pelaajavoittaa
         {
+            playerWin = true;
             xp = (this.startTime * 1.5f) + (Mathf.Log10(scoreDifference)) * 100;
         }
         else if(scoreDifference < 0) //tietokonevoittaa
         {
+            aiWin = true;
             scoreDifference = -1 * scoreDifference;
             xp = (this.startTime * 1.5f) - ((Mathf.Log10(scoreDifference)) * 20); 
            
         }
         else if (scoreDifference == 0) //tasapeli
         {
+            tie = true;
             xp = this.startTime * 0.5f;
         }
         roundedxp = (int)Mathf.Round(xp);
@@ -293,9 +355,10 @@ public class Game_Manager : MonoBehaviour {
         {
             PlayerPrefs.SetInt("lastRoundXp", roundedxp);
         }
-      
+        xpResultText.GetComponent<Text>().text = "+" + roundedxp + "xp";
 
-        
+
+
     }
 
     //Kutsutaan kun startbuttonia painetaan
@@ -325,6 +388,20 @@ public class Game_Manager : MonoBehaviour {
         StartCoroutine(StartDelay());
         GameObject.Find("Ball").SendMessage("EnableBall");
 
+    }
+
+    public void ClickReturnMainMenu()
+    {
+        ReturnMainMenuClicked = true;
+    }
+
+    public void OptionsMenuOn()
+    {
+        isOptionsMenuOn = true;
+    }
+    public void OptionsMenuOff()
+    {
+        isOptionsMenuOn = false;
     }
 
 }

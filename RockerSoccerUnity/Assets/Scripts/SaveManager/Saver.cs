@@ -12,7 +12,7 @@ public class Saver : MonoBehaviour {
     public Slider musicSlider;
 
 
-    public int xpOnLevel;
+
     public int newTotalxp;
     public int level;
     public int levelAmount = 10;

@@ -6,38 +6,39 @@ using UnityEngine;
 
 
 
-public class OptionsMenu : MonoBehaviour {
+public class OptionsMenu : MonoBehaviour
+{
 
     public AudioMixer audioMixer;
     public Slider sfxSlider;
     public Slider musicSlider;
-    
-   
+
+
 
     float savedMusicVolume;
     bool changed = false;
- 
 
 
-   
+
+
 
 
     public void Awake()
     {
 
         //Tallennetut ääniasetukset
-    
+
         savedMusicVolume = PlayerPrefs.GetFloat("MusicVolume");
 
 
         //Asetetaan tallennetut arvot
-    
 
-            audioMixer.SetFloat("MusicVolume", savedMusicVolume);
-            musicSlider.value = savedMusicVolume;
 
-    
-      
+        musicSlider.value = savedMusicVolume;
+        audioMixer.SetFloat("MusicVolume", savedMusicVolume);
+
+
+
 
     }
 
@@ -45,52 +46,49 @@ public class OptionsMenu : MonoBehaviour {
     {
 
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
-     
-       
-        
-        
-       
+
+
+
+
+
     }
 
 
 
-    public void SetMasterVolume (float MasterVolume)
+    public void SetMasterVolume(float MasterVolume)
     {
         audioMixer.SetFloat("MasterVolume", MasterVolume);
         PlayerPrefs.SetFloat("MasterVolume", MasterVolume);
-      
+
     }
 
     public void SetSFXVolume(float SFXVolume)
-    {  
-      //  audioMixer.SetFloat("SFXVolume", SFXVolume);    
-      //PlayerPrefs.SetFloat("SFXVolume", savedSFXVolume);
-        
+    {
+        //  audioMixer.SetFloat("SFXVolume", SFXVolume);    
+        //PlayerPrefs.SetFloat("SFXVolume", savedSFXVolume);
+
     }
 
 
     public void SetMusicVolume(float MusicVolume)
     {
 
-
-        if (MusicVolume == 0)
         {
-            MusicVolume = -20;
+
             audioMixer.SetFloat("MusicVolume", MusicVolume);
-            musicSlider.value = MusicVolume;
-           
-        }
-        else if(MusicVolume != 0)
-        {
+
             PlayerPrefs.SetFloat("MusicVolume", MusicVolume);
-            musicSlider.value = MusicVolume;
+
+
+
         }
 
-       
+        /* public void SetQuality (int qualityIndex)
+        {
+            QualitySettings.SetQualityLevel(qualityIndex);
+
+            } */
     }
 
-    public void SetQuality (int qualityIndex)
-    {
-        QualitySettings.SetQualityLevel(qualityIndex);
-    }
 }
+
