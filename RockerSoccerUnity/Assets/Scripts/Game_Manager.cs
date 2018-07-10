@@ -96,6 +96,7 @@ public class Game_Manager : MonoBehaviour {
         if (PlayerPrefs.HasKey("PlayTime"))
         {
             startTime = PlayerPrefs.GetFloat("PlayTime");
+           
         }
         else
         {
@@ -293,15 +294,15 @@ public class Game_Manager : MonoBehaviour {
         yield return new WaitForSeconds(3.0f);
         if(playerWin == true)
         {
-            resultText.GetComponent<Text>().text = "win";
+            resultText.GetComponent<Text>().text = "You win";
         }
         else if(aiWin == true)
         {
-            resultText.GetComponent<Text>().text = "defeat";
+            resultText.GetComponent<Text>().text = "You lose";
         }
         else if(tie == true)
         {
-            resultText.GetComponent<Text>().text = "tie";
+            resultText.GetComponent<Text>().text = "draw";
         }
          
         // Debug.Log("Game ended!!!");
@@ -373,7 +374,8 @@ public class Game_Manager : MonoBehaviour {
     public void ReturnToMainMenu()
     {
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        PlayerPrefs.SetInt("nextScene", 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     void ResetGame()
