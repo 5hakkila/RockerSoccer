@@ -199,11 +199,13 @@ public class Game_Manager : MonoBehaviour {
 
     public IEnumerator ScoreDelay()
     {
-        GameObject.Find("Ball").SendMessage("DisableBall");
+        GameObject.Find("Ball").SendMessage("DisableBall"); //markkeri pois
+        GameObject.Find("marker").GetComponent<SpriteRenderer>().enabled = false;
         yield return new WaitForSeconds(5.0f);
         GameObject.Find("Ball").SendMessage("StopBall");
         ball.transform.position = ballLocation.transform.position;
-        GameObject.Find("Ball").SendMessage("EnableBall");
+        GameObject.Find("Ball").SendMessage("EnableBall"); //markkeri päälle
+        GameObject.Find("marker").GetComponent<SpriteRenderer>().enabled = true;
         StartCoroutine(StartDelay());
 
 
@@ -284,7 +286,7 @@ public class Game_Manager : MonoBehaviour {
 
     IEnumerator EndGame()
     {
-        
+        GameObject.Find("marker").GetComponent<SpriteRenderer>().enabled = false; //markkeri pois
         uiCanvas.SetActive(false); //Poistetaan uibuttonit
         GameObject.Find("Ball").SendMessage("DisableBall");
         
@@ -374,6 +376,7 @@ public class Game_Manager : MonoBehaviour {
     public void ReturnToMainMenu()
     {
 
+       
         PlayerPrefs.SetInt("nextScene", 1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }

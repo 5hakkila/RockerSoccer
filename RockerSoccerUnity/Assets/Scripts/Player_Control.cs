@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player_Control : MonoBehaviour {
 
@@ -15,6 +16,9 @@ public class Player_Control : MonoBehaviour {
     };
 
     PlayerState player_state;
+
+    public Button buttonLeft;
+    public Button buttonRight;
    
     public bool active = false;
     public Transform ball;
