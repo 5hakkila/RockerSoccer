@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 
 public class Game_Manager : MonoBehaviour {
-   
+
 
     // Use this for initialization
     public enum GameState
@@ -20,6 +20,13 @@ public class Game_Manager : MonoBehaviour {
         SLOWMO,
         PLAY
     };
+    private enum color1
+    {
+        RED,
+        WHITE
+    };
+
+    color1 timeColor;
 
     GameState gameState;
 
@@ -52,8 +59,8 @@ public class Game_Manager : MonoBehaviour {
     public GameObject optionsMenu;
     public GameObject resultText; //Shows the match result in the end
     public GameObject xpResultText; //Shows gained xp in the end
-    //public GameObject canvas;
-   
+                                    //public GameObject canvas;
+
 
     public Transform ballLocation;
     public Transform ball;
@@ -96,13 +103,13 @@ public class Game_Manager : MonoBehaviour {
         if (PlayerPrefs.HasKey("PlayTime"))
         {
             startTime = PlayerPrefs.GetFloat("PlayTime");
-           
+
         }
         else
         {
             startTime = 5.0f;
         }
-        
+
         // StartCoroutine(StartDelay());
         resetTime = 0.0f;
 
@@ -112,11 +119,11 @@ public class Game_Manager : MonoBehaviour {
     }
 
 
-    
+
     //Odotetaan, että pelaaja klikkaa START
     IEnumerator WaitForStartClicked()
     {
-        yield return new WaitUntil(() => startClicked == true); 
+        yield return new WaitUntil(() => startClicked == true);
         gameState = GameState.STARTGAME;
         EnableBall();
         StartCoroutine(StartDelay());
@@ -127,29 +134,29 @@ public class Game_Manager : MonoBehaviour {
     void Update() {
 
 
-         //Jos options menu päällä
-         if(isOptionsMenuOn == true)
+        //Jos options menu päällä
+        if (isOptionsMenuOn == true)
         {
             StartButton.SetActive(false);
             uiCanvas.SetActive(false);
         }
-         else if(isOptionsMenuOn == false && startClicked == true)
+        else if (isOptionsMenuOn == false && startClicked == true)
         {
             uiCanvas.SetActive(true);
         }
-         else if(isOptionsMenuOn == false && startClicked == false)
+        else if (isOptionsMenuOn == false && startClicked == false)
         {
             StartButton.SetActive(true);
         }
-         
 
 
 
 
 
-         if (releaseBall == false)
+
+        if (releaseBall == false)
         {
-             ball.transform.position = ballLocation.transform.position;
+            ball.transform.position = ballLocation.transform.position;
         }
 
 
@@ -178,6 +185,47 @@ public class Game_Manager : MonoBehaviour {
 
         }
 
+        
+
+        ////////////////////////////////////////////////////////////////////////PASKAA
+        if( Mathf.Round(roundTime) % 2 == 0)
+        {
+            timeColor = color1.WHITE;
+
+
+        }
+        else if(Mathf.Round(roundTime) % 2 == 1)
+        {
+            timeColor = color1.RED;
+        }
+
+        if ((int)roundTime < 10)
+        {
+                       
+
+            if(timeColor == color1.WHITE)
+            {
+            UiTime.GetComponent<Text>().color = Color.white;
+                UiTime.GetComponent<Text>().fontSize = 40;
+            
+            }
+            if(timeColor == color1.RED)
+            {
+                UiTime.GetComponent<Text>().color = Color.red;
+                UiTime.GetComponent<Text>().fontSize = 45;
+
+            }
+
+
+        }////////////////////////////////////////////////////////////////////////////////////////////////PASKAA
+     
+
+
+
+        else 
+        {
+            UiTime.GetComponent<Text>().color = Color.white;
+        }
             UiTime.text = roundTime.ToString("0");
             UiScoreTeam1.text = score_Team1.ToString();
             UiScoreTeam2.text = score_Team2.ToString();
