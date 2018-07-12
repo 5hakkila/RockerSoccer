@@ -89,6 +89,7 @@ public class Game_Manager : MonoBehaviour {
         optionsMenu = GameObject.Find("OptionsMenu");
         gOCanvas.SetActive(false);
         StartButton = GameObject.Find("StartButton");
+        GameObject.Find("Ball").SendMessage("EnableBall"); ///FIX
     }
 
     void Start() {
@@ -224,14 +225,14 @@ public class Game_Manager : MonoBehaviour {
 
     public IEnumerator ScoreDelay()
     {
-        GameObject.Find("Ball").SendMessage("DisableBall"); //markkeri pois
-        GameObject.Find("marker").GetComponent<SpriteRenderer>().enabled = false;
+        GameObject.Find("Ball").SendMessage("DisableBall"); 
+        GameObject.Find("marker").GetComponent<SpriteRenderer>().enabled = false; //markkeri pois
         yield return new WaitForSeconds(5.0f);
         GameObject.Find("Ball").SendMessage("StopBall");
         ball.transform.position = ballLocation.transform.position;
-        GameObject.Find("Ball").SendMessage("EnableBall"); //markkeri päälle
-        GameObject.Find("marker").GetComponent<SpriteRenderer>().enabled = true;
+        GameObject.Find("Ball").SendMessage("EnableBall");
         StartCoroutine(StartDelay());
+        //GameObject.Find("marker").GetComponent<SpriteRenderer>().enabled = true;  //markkeri päälle
 
 
     }
@@ -338,7 +339,8 @@ public class Game_Manager : MonoBehaviour {
         gOCanvas.SetActive(true);
         // canvas.SetActive(false);
         yield return new WaitUntil(() => ReturnMainMenuClicked == true);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        //SceneManager.LoadScene("Main");
 
     }
 
