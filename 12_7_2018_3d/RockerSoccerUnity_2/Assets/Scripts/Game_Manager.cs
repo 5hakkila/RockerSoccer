@@ -30,10 +30,9 @@ public class Game_Manager : MonoBehaviour {
 
     GameState gameState;
 
-    public bool draw = false;
+    public bool tie = false;
     public bool aiWin = false;
     public bool playerWin = false;
-    private bool isQuittingAsked;
     private bool isOptionsMenuOn = false; //Onko options menu klikattu päälle
     private bool ReturnMainMenuClicked = false; //Pelin päätyttyä onko klikattu palaamainmenuun
     private bool startClicked = false; //onko painettu START
@@ -44,8 +43,8 @@ public class Game_Manager : MonoBehaviour {
     public bool enableBall;
     private float currentTime;
     private float roundTime;
-    private float resetTime;
     public float startTime = 20.0f;
+    private float resetTime;
 
     public Text UiTime;
     public Text UiScoreTeam1;
@@ -53,8 +52,6 @@ public class Game_Manager : MonoBehaviour {
     public Text GameEnded_text;
 
     GameObject StartButton;
-    public GameObject quittingCanvas;
-    public GameObject menuButton;
     public GameObject leftGoal;
     public GameObject rightGoal;
     public GameObject gOCanvas; //GameOver canvas
@@ -62,7 +59,6 @@ public class Game_Manager : MonoBehaviour {
     public GameObject optionsMenu;
     public GameObject resultText; //Shows the match result in the end
     public GameObject xpResultText; //Shows gained xp in the end
-
     //public GameObject canvas;
    
 
@@ -86,15 +82,11 @@ public class Game_Manager : MonoBehaviour {
 
     private void Awake()
     {
-        quittingCanvas = GameObject.Find("Quitting");
-        menuButton = GameObject.Find("MenuButton");
         resultText = GameObject.Find("ResultText");
         xpResultText = GameObject.Find("XpGained");
         uiCanvas = GameObject.Find("UiCanvas");
         gOCanvas = GameObject.Find("GameOverCanvas");
         optionsMenu = GameObject.Find("OptionsMenu");
-        optionsMenu.SetActive(false);
-        quittingCanvas.SetActive(false);
         gOCanvas.SetActive(false);
         StartButton = GameObject.Find("StartButton");
         GameObject.Find("Ball").SendMessage("EnableBall"); ///FIX
@@ -145,24 +137,20 @@ public class Game_Manager : MonoBehaviour {
        // print(score_Team2);
 
         //Jos options menu päällä
-        if (isOptionsMenuOn == true || isQuittingAsked == true)
+        if (isOptionsMenuOn == true)
         {
-            menuButton.SetActive(false);
             StartButton.SetActive(false);
             uiCanvas.SetActive(false);
         }
          else if(isOptionsMenuOn == false && startClicked == true)
         {
-            menuButton.SetActive(true);
             uiCanvas.SetActive(true);
         }
          else if(isOptionsMenuOn == false && startClicked == false)
         {
-            menuButton.SetActive(true);
             StartButton.SetActive(true);
-            uiCanvas.SetActive(true);
         }
-   
+         
 
 
 
@@ -342,7 +330,7 @@ public class Game_Manager : MonoBehaviour {
         {
             resultText.GetComponent<Text>().text = "You lose";
         }
-        else if(draw == true)
+        else if(tie == true)
         {
             resultText.GetComponent<Text>().text = "draw";
         }
@@ -386,7 +374,7 @@ public class Game_Manager : MonoBehaviour {
         }
         else if (scoreDifference == 0) //tasapeli
         {
-            draw = true;
+            tie = true;
             xp = this.startTime * 0.5f;
         }
         roundedxp = (int)Mathf.Round(xp);
@@ -448,27 +436,5 @@ public class Game_Manager : MonoBehaviour {
     {
         isOptionsMenuOn = false;
     }
-
-    public void askQuitting()
-    {
-        isQuittingAsked = true;
-
-        optionsMenu.SetActive(false);
-        quittingCanvas.SetActive(true);
-        isOptionsMenuOn = false;
-    }
-    public void quitGame()
-    {
-        PlayerPrefs.SetInt("nextScene", 1);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-    public void returnOptionsMenu()
-    {
-        quittingCanvas.SetActive(false);
-        optionsMenu.SetActive(true);
-        isOptionsMenuOn = true;
-        isQuittingAsked = false;
-    }
-
 
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player_Control : MonoBehaviour {
 
@@ -23,14 +22,11 @@ public class Player_Control : MonoBehaviour {
     public Transform start_position;
     public Rigidbody2D playerR;
     public Rigidbody2D ballR;
-    public Button leftButton; //Vasen nuoli
-    public Button rightButton; //Oikea nuoli
 
     private  float timer = 0.0f;
    
     private float jumpForce =400.0f;
-
-    public bool movingPlayer = false; //Liikutetaanko pelaajaa
+    
     public bool canKick = false;
     public float kickForce = 0.0f;
     public float extra_Force = 0.0f;
@@ -62,9 +58,7 @@ public class Player_Control : MonoBehaviour {
     public float swipe_Distance;
     // Use this for initialization
     void Start () {
-        
         player_state = PlayerState.IDLE;
-     
 	}
 
     // Update is called once per frame
@@ -93,11 +87,6 @@ public class Player_Control : MonoBehaviour {
             Physics2D.IgnoreLayerCollision(8, 9, true);
 
     */
-        /*if(rightButton.GetComponent<Button>().onClick == true)
-        {
-            Debug.Log("oikealle");
-        }
-          */
         if (getDistance < 2.0f)
         {
             canKick = true;
@@ -395,14 +384,7 @@ public class Player_Control : MonoBehaviour {
 
     }
 
-    public void leftButtonClicked()
-    {
-        Debug.Log("left clicked");
-    }
+    
 
-    public void rightButtonClicked()
-    {
-        Debug.Log("right clicked");
-    }
 
 }
