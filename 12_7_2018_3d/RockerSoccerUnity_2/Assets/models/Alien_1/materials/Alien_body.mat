@@ -9,7 +9,7 @@ Material:
   m_Name: Alien_body
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION _GLOSSYREFLECTIONS_OFF _SPECULARHIGHLIGHTS_OFF
-  m_LightmapFlags: 2
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -69,8 +69,8 @@ Material:
     - _DstBlend: 0
     - _Emission: 1
     - _EmissiveStrengh: 1
-    - _GlossMapScale: 0.446
-    - _Glossiness: 0.208
+    - _GlossMapScale: 0.225
+    - _Glossiness: 0.248
     - _GlossyReflections: 0
     - _GradientStrength: 1
     - _Metallic: 0
@@ -86,7 +86,7 @@ Material:
     - _yPosHigh: 4.06
     - _yPosLow: -2.45
     m_Colors:
-    - _Color: {r: 0.20871624, g: 0.38679248, b: 0.12589, a: 1}
+    - _Color: {r: 0.24398822, g: 0.4339623, b: 0.1535244, a: 1}
     - _ColorHigh: {r: 0.4329882, g: 0.509434, b: 0.29076186, a: 1}
     - _ColorLow: {r: 0.39124244, g: 0.5283019, b: 0.4133488, a: 1}
     - _ColorX: {r: 0.3301887, g: 0.08877714, b: 0.08877714, a: 1}
