@@ -26,7 +26,9 @@ public class Player_Control : MonoBehaviour {
     public Button leftButton; //Vasen nuoli
     public Button rightButton; //Oikea nuoli
     private bool playerIsControlling = false; //Ohjaako pelaaja 
-    public Time buttonControl; //Kun pelaaja ohjasi viimeksi
+    private float control1;
+    private float control2;
+    private float playerControlLatency = 3.0f;
     public bool controlToggle = true;
  
 
@@ -72,6 +74,13 @@ public class Player_Control : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
+        float time1 = Time.time;
+        if(time1 - control1 > 3.0f && playerIsControlling == true)
+        {
+            Debug.Log("3s");
+            playerIsControlling = false;
+        }
         extra_Force = GameObject.Find("Main Camera").GetComponent<Zoom_Out>().send_Force;
        
     
@@ -425,11 +434,13 @@ public class Player_Control : MonoBehaviour {
     {
         Debug.Log("left clicked");
         playerIsControlling = true;
+        control1 = Time.time;
     }
 
     public void rightButtonClicked()
     {
         Debug.Log("right clicked");
         playerIsControlling = true;
+        control1 = Time.time;
     }
 }
