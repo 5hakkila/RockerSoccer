@@ -27,6 +27,8 @@ public class Player_Control : MonoBehaviour {
     public Button rightButton; //Oikea nuoli
     private bool playerIsControlling = false; //Ohjaako pelaaja 
     public Time buttonControl; //Kun pelaaja ohjasi viimeksi
+    public bool controlToggle = true;
+ 
 
     private  float timer = 0.0f;
    
@@ -64,8 +66,7 @@ public class Player_Control : MonoBehaviour {
     // Use this for initialization
     void Start () {
         player_state = PlayerState.IDLE;
-        leftButton = GameObject.Find("leftButton").GetComponent<Button>();
-        rightButton = GameObject.Find("rightButton").GetComponent<Button>();
+      
        
     }
 
@@ -73,6 +74,7 @@ public class Player_Control : MonoBehaviour {
     void Update() {
         extra_Force = GameObject.Find("Main Camera").GetComponent<Zoom_Out>().send_Force;
        
+    
         //for internal access
         /*
         if (getInput.GetComponent<TouchControl>().inputState == TouchControl.InputState.Down)

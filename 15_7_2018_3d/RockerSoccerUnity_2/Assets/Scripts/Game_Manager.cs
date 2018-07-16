@@ -53,6 +53,9 @@ public class Game_Manager : MonoBehaviour {
     public Text GameEnded_text;
 
     GameObject StartButton;
+    public GameObject rightButton;
+    public GameObject leftButton;
+    public GameObject toggleControls;
     public GameObject quittingCanvas;
     public GameObject menuButton;
     public GameObject leftGoal;
@@ -85,6 +88,9 @@ public class Game_Manager : MonoBehaviour {
 
     private void Awake()
     {
+        toggleControls = GameObject.Find("ToggleControls");
+        rightButton = GameObject.Find("rightButton");
+        leftButton = GameObject.Find("leftButton");
         quittingCanvas = GameObject.Find("Quitting");
         menuButton = GameObject.Find("MenuButton");
         resultText = GameObject.Find("ResultText");
@@ -143,6 +149,16 @@ public class Game_Manager : MonoBehaviour {
       //  print(score_Team1);
        // print(score_Team2);
 
+        if(toggleControls.GetComponent<Toggle>().isOn == false)
+        {
+         
+            leftButton.SetActive(false);
+            rightButton.SetActive(false);
+        }
+        else {
+            leftButton.SetActive(true);
+            rightButton.SetActive(true);
+        }
         //Jos options menu päällä
         if (isOptionsMenuOn == true || isQuittingAsked == true)
         {
@@ -331,7 +347,7 @@ public class Game_Manager : MonoBehaviour {
         GameObject.Find("Ball").SendMessage("DisableBall");
         
         releaseBall = false;
-        GameEnded_text.text = ("Game Over");
+        //GameEnded_text.text = ("Game Over");
         calculateXp(); //Lasketaan xp pelin päätyttyä
         yield return new WaitForSeconds(3.0f);
         if(playerWin == true)
