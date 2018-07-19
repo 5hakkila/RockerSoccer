@@ -96,7 +96,7 @@ public class Player_Manager : MonoBehaviour {
             {
                 marker.GetComponent<Transform>().transform.position = players[minIndex].transform.position;
 
-                marker.GetComponent<Transform>().Translate(0, 10, 0);
+                marker.GetComponent<Transform>().Translate(0, 8, 0);
              
             }
             
